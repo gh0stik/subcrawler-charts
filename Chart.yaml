@@ -1,0 +1,7 @@
+apiVersion: v2
+name: subcrawler
+version: 1.0.0
+appVersion: "1.0.0"
+maintainers:
+  - name: Nico
+    url: https://github.com/gh0stik

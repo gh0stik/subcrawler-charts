@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      containers:
+      - name: {{ .Values.appName }}
+        image: {{ .Values.image }}
+        imagePullPolicy: Always
+        ports:
+          - containerPort: {{ .Values.localDeployPort }}
+        env:
+          - name: REDIS_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: redis-envs
+                key: REDIS_HOST
+          - name: REDIS_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: redis-envs
+                key: REDIS_PORT
+          - name: APP_ENV
+            valueFrom:
+              configMapKeyRef:
+                name: subcrawler-envs
+                key: APP_ENV
+        volumeMounts:
+          - name: {{ .Values.csvPvName }}
+            mountPath: /app/csv_db
+          - name: app-seckey
+            readOnly: true
+            mountPath: /etc/app-seckey
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            cpu: 200m
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: {{ .Values.localDeployPort }}
+          initialDelaySeconds: 20
+          periodSeconds: 5
+          failureThreshold: 6
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: {{ .Values.localDeployPort }}
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          failureThreshold: 6
+      volumes:
+        - name: {{ .Values.csvPvName }}
+          persistentVolumeClaim:
+            claimName: csv-pv-claim
+        - name: app-seckey
+          secret:
+            secretName: subcrawler-secret-key

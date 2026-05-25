@@ -1,0 +1,5 @@
+namespace: application
+appName: subcrawler
+image: gh0stik/subcrawler:1.0
+localDeployPort: 5000
+csvPvName: csv-pv

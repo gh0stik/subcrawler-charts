@@ -1,0 +1,2 @@
+Port forward to use the app:
+kubectl port-forward service/subcrawler 5000:5000 -n {{ .Values.namespace }}

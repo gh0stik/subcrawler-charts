@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: subcrawler-envs
+  namespace: {{ .Values.namespace }}
+data:
+  {{- if eq .Values.namespace "application-dev" }}
+  APP_ENV: "dev"
+  {{- else }}
+  APP_ENV: "prod"
+  {{- end }}
