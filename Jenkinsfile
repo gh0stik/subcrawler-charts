@@ -35,11 +35,10 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     script {
-                        sh "git config --global --add safe.directory /var/jenkins_home/workspace/subcrawler-charts-ppl"
-                        sh "git config --global user.name 'Jenkins'"
-                        sh "git config --global user.email 'jenkins@localjenkinsrepo.job'"
+                        sh "git config --local user.name 'Jenkins'"
+                        sh "git config --local user.email 'jenkins@localjenkinsrepo.job'"
                         sh "git add ."
-                        sh "git commit -m 'Update Helm chart'"
+                        sh "git commit -m 'Update Helm chart' --allow-empty"
                         sh "git push https://${USER}:${PASS}@github.com/gh0stik/subcrawler-charts.git HEAD:main"
                     }
                 }
