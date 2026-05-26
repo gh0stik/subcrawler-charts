@@ -11,6 +11,27 @@ pipeline {
         pollSCM('H/5 * * * *')
     }
 
+    stage('Checkout Source') {
+            steps {
+                checkout([$class: 'GitSCM', 
+                    branches: [[name: '*/main']],
+                    doGenerateSubmoduleConfigurations: false, 
+                    extensions: [
+                        // This block tells the polling mechanism what to watch
+                        [$class: 'PathRestriction', 
+                            encodedIncludedRegions: '''templates/.*
+Chart.yaml
+values.*\\.yaml''', 
+                            encodedExcludedRegions: '''index.yaml
+.*\\.tgz'''
+                        ]
+                    ], 
+                    submoduleCfg: [], 
+                    userRemoteConfigs: [[url: 'https://github.com/gh0stik/subcrawler-charts.git']]
+                ])
+            }
+        }
+
     stages {
         stage('Lint Chart') {
             steps {
