@@ -3,8 +3,8 @@ entries:
   subcrawler:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-26T11:32:38.061187944Z"
-    digest: 3d3216c3ff65aeae36cb694da35f937567d5ec4a56ac7a5269c88d0d5b61e048
+    created: "2026-05-26T11:35:38.020350126Z"
+    digest: b73802ebb9b7526e5f7bcb0e36bcb11d8cc5cca66812157a1ee3e629ff42c129
     maintainers:
     - name: Nico
       url: https://github.com/gh0stik
@@ -12,4 +12,4 @@ entries:
     urls:
     - subcrawler-1.0.0.tgz
     version: 1.0.0
-generated: "2026-05-26T11:32:38.060280494Z"
+generated: "2026-05-26T11:35:38.019769562Z"
