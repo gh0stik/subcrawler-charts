@@ -40,7 +40,7 @@ pipeline {
                         sh "git config --global user.email 'jenkins@localjenkinsrepo.job'"
                         sh "git add ."
                         sh "git commit -m 'Update Helm chart'"
-                        sh "git push origin https://${USER}:${PASS}@github.com/gh0stik/subcrawler-charts.git HEAD:main"
+                        sh "git push https://${USER}:${PASS}@github.com/gh0stik/subcrawler-charts.git HEAD:main"
                     }
                 }
             }
