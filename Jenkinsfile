@@ -33,7 +33,7 @@ pipeline {
 
         stage('Push to Repository') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     sh "git config --local user.name 'Jenkins'"
                     sh "git config --local user.email 'jenkins@localjenkinsrepo.job'"
                     sh "git add ."
