@@ -1,7 +1,6 @@
 pipeline {
     agent {
         docker {
-            // Spin up a container that already has Helm installed
             image 'alpine/helm:3.14.0' 
             reuseNode true
             args '-u root --entrypoint='
@@ -29,6 +28,20 @@ pipeline {
             steps {
                 sh 'helm repo index .'
                 sh 'ls -ltr'
+            }
+        }
+
+        stage('Push to Repository') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    script {
+                        sh "git config --global user.name 'Jenkins'"
+                        sh "git config --global user.email 'jenkins@localjenkinsrepo.job'"
+                        sh "git add ."
+                        sh "git commit -m 'Update Helm chart'"
+                        sh "git push origin https://${USER}:${PASS}@github.com/gh0stik/subcrawler-charts.git HEAD:main"
+                    }
+                }
             }
         }
     }
