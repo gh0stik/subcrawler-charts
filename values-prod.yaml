@@ -1,3 +1,2 @@
 namespace: application-prod
 csvPvName: csv-prod
-localDeployPort: 5000
