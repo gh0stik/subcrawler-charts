@@ -36,6 +36,11 @@ spec:
               configMapKeyRef:
                 name: subcrawler-envs
                 key: APP_ENV
+          - name: APP_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: subcrawler-envs
+                key: APP_PORT
         volumeMounts:
           - name: {{ .Values.csvPvName }}
             mountPath: /app/csv_db

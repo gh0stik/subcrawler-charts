@@ -9,3 +9,4 @@ data:
   {{- else }}
   APP_ENV: "prod"
   {{- end }}
+  APP_PORT: "{{ .Values.localDeployPort }}"
